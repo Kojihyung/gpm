@@ -50,7 +50,7 @@ void rec_Backtrack(const Graph &data, const Graph &query, const CandidateSet &cs
     if (is_visited_data[cs.GetCandidate(set, candidate)] == 1)
     {
       /* already used vertex */
-      cout << "failed" << endl;
+      //cout << "failed" << endl;
       continue;
     }
     for (int i = 0; i < count; i++)
@@ -66,7 +66,7 @@ void rec_Backtrack(const Graph &data, const Graph &query, const CandidateSet &cs
         /* failed */
         else
         {
-          cout << "failed at count: " << count << "vertex: " << cs.GetCandidate(set, candidate) << endl;
+          //cout << "failed at count: " << count << "vertex: " << cs.GetCandidate(set, candidate) << endl;
           success_flag = 0;
           break;
         }
@@ -107,7 +107,7 @@ void Backtrack::PrintAllMatches(const Graph &data, const Graph &query,
     is_visited_data[i] = 0;
   }
   output << "t " <<query.GetNumVertices() << "\n";
-  std::cout << "t " << query.GetNumVertices() << "\n";
+  //std::cout << "t " << query.GetNumVertices() << "\n";
 
   Vertex curr;
   int max = 0;
