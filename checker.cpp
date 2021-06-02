@@ -1,13 +1,15 @@
 #include "graph.h"
 #include "common.h"
+#include <filesystem>
 using namespace std;
 
+ofstream testlog("testlog.txt");
 
 int answer_check(Graph& data, Graph& query, vector<Vertex> ans, const int ans_size){
     for(auto elem = ans.begin(); elem != ans.end(); elem++){
         for(auto elem2 = elem+1; elem2 !=ans.end(); elem2++){
             if(elem == elem2){
-                cout << "vertex used more than once. Vertex No. "<< *elem << endl;
+                testlog << "vertex used more than once. Vertex No. "<< *elem << endl;
                 return 0;
             }
         }
@@ -15,9 +17,14 @@ int answer_check(Graph& data, Graph& query, vector<Vertex> ans, const int ans_si
 
     for(Vertex i=0; i< ans_size;i++){
         for(Vertex iter = query.GetNeighborStartOffset(i); iter < query.GetNeighborEndOffset(i); iter++){
-            if(!data.IsNeighbor(ans[i],ans[iter]))
+            if(i == query.GetNeighbor(iter)){
+              continue;
+            }
+            if(!data.IsNeighbor(ans[i],ans[query.GetNeighbor(iter)]))
             {
-                return 0;
+              testlog << "query vertex " << i << " and iter " << iter << " not connected in real vertex \n";
+              testlog << "data vertex " << ans[i] << " data vertex " << ans[iter] << endl;
+              return 0;
             }
         } 
     }
@@ -56,10 +63,11 @@ int main(int argc, char** argv){
   int wrong = 0;
   while (fin >> type) {
     if (type == 'a') {
-        cout << "checking ans no. "<< count << endl;
+        //cout << "checking ans no. "<< count << endl;
         count++;
       Vertex id;
       for (size_t i = 0; i < num_query_vertices; ++i) {
+        //cout <<"reading query v no. "<<i << endl;
         Vertex data_vertex;
         fin >> data_vertex;
         ans[i]=data_vertex;
@@ -79,4 +87,9 @@ int main(int argc, char** argv){
   std::cout << "right: " << right << endl;
   cout << "wrong: " << wrong << endl;
   cout << "rate: " << (float)right/(float)(right+wrong) << endl;
+
+  testlog << "right: " << right << endl;
+  testlog << "wrong: " << wrong << endl;
+  testlog << "rate: " << (float)right/(float)(right+wrong) << endl;
+  testlog.close();
 }
