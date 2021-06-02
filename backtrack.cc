@@ -47,14 +47,12 @@ void rec_Backtrack(const Graph &data, const Graph &query, const CandidateSet &cs
 
   for (Vertex candidate = 0; candidate < cs.GetCandidateSize(set); candidate++)
   {
-
     if (is_visited_data[cs.GetCandidate(set, candidate)] == 1)
     {
       /* already used vertex */
       cout << "failed" << endl;
       continue;
     }
-
     for (int i = 0; i < count; i++)
     {
       /* check query connection for previous visited vertexes*/
@@ -108,6 +106,7 @@ void Backtrack::PrintAllMatches(const Graph &data, const Graph &query,
   {
     is_visited_data[i] = 0;
   }
+  output << "t " <<query.GetNumVertices() << "\n";
   std::cout << "t " << query.GetNumVertices() << "\n";
 
   Vertex curr;
